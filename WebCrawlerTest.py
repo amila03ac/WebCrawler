@@ -1,6 +1,6 @@
 import unittest
 from BlogCrawler import BlogCrawler
-from BeautifulSoup import BeautifulSoup
+from bs4 import BeautifulSoup
 
 class WebCrawlerTest(unittest.TestCase):
     
