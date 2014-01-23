@@ -1,0 +1,233 @@
+<!DOCTYPE HTML>
+<!--
+	Miniport 1.0 by HTML5 Up!
+	html5up.net | @n33co
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>OryX Statistic Report</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
+		<link href="http://fonts.googleapis.com/css?family=Open+Sans:300,600,700" rel="stylesheet" />
+		<script src="js/jquery-1.8.3.min.js"></script>
+		<script src="css/5grid/init.js?use=mobile,desktop,1000px"></script>
+		<script src="js/jquery.xml2json.js"></script>
+		<noscript>
+			<link rel="stylesheet" href="css/5grid/core.css" />
+			<link rel="stylesheet" href="css/5grid/core-desktop.css" />
+			<link rel="stylesheet" href="css/style.css" />
+			<link rel="stylesheet" href="css/style-desktop.css" />
+		</noscript>
+		<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+		<script type="text/javascript">
+
+		
+		
+		var coloumdata = new Array(2);
+		google.load("visualization", "1", {packages:["corechart"]});
+
+			
+		$(document).ready(function(){
+			
+	
+			
+			$.get('data/total.xml', function(xml){
+				var outputjson = $.xml2json(xml);
+				document.getElementById('countanddate').innerHTML ='<strong>'+outputjson.info.details.webpages+'</strong> Page Visits,  updated on <strong>'+outputjson.info.details.date+'</strong>';
+			
+				//for (var i=0;i<2;i++)
+				
+					var c=0;
+					var total=0; 
+					var perC=0;
+					var tablecontent="";
+				//{ 
+					coloumdata[0] = new Array(outputjson.info.elements.element.length);
+					coloumdata[0][0] = "Element Type";
+					for (var j=1;j<outputjson.info.elements.element.length+1;j++)
+					{
+						coloumdata[0][j] = outputjson.info.elements.element[j-1].type;
+					} 
+					
+					
+					coloumdata[1] = new Array(outputjson.info.elements.element.length);
+					coloumdata[1][0] = "Element Type";
+					
+					var list = new Array(outputjson.info.elements.element.length);
+					
+					for (var j=1;j<outputjson.info.elements.element.length+1;j++)
+					{
+
+						coloumdata[1][j] = Number(outputjson.info.elements.element[j-1].count);
+						list[j-1] = outputjson.info.elements.element[j-1];
+
+					} 
+					
+					
+					var comparisons = 0,
+						swaps = 0,
+						endIndex = 0,
+						len = list.length - 1,
+						hasSwap = true;
+				 
+								for (var i = 0; i < len; i++) {
+							 
+									hasSwap = false;
+							 
+									for (var j = 0, swapping, endIndex = len - i; j < endIndex; j++) {
+										comparisons++;
+							 
+										if (Number(list[j].count) < Number(list[j + 1].count)) {
+									 
+											swapping = list[j];
+							 
+											list[j] = list[j + 1];
+											list[j + 1] = swapping;
+							 
+											swaps++;
+											hasSwap = true;
+										};
+									};
+							 
+									if (!hasSwap) {
+										break;
+									}
+								}
+					
+					
+					for (var j=0;j<outputjson.info.elements.element.length;j++)
+					{
+						var c = Number(list[j].count);
+						var total = Number(list[j].pageCount);
+						var perC = c/total;
+						
+						if(j%2 == 0){
+							tablecontent += "<tr>";
+						}
+						else{
+							tablecontent += "<tr class=\"odd\">";
+						}
+						
+						tablecontent += "<td>"+list[j].type+"</td>";
+						tablecontent += "<td>"+c+"</td>";
+						tablecontent += "<td>"+total+"</td>";
+						tablecontent += "<td>"+Math.round(perC)+"</td>";
+						tablecontent += "</tr>";
+					} 
+
+					document.getElementById('tbbody').innerHTML=tablecontent;
+					
+					
+					
+					$.fn.loadChart();
+				
+			});
+			
+			
+			$.fn.loadChart = function() { 
+			
+			//google.setOnLoadCallback(drawChart);
+			
+			var data = google.visualization.arrayToDataTable(coloumdata);
+
+			var options = {
+				fontName:'Open Sans',fontSize:14
+			};
+
+			var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+			chart.draw(data, options);
+			}
+			
+			
+		
+		});
+		
+
+		
+		
+
+		
+
+		</script>
+	</head>
+	<body>
+
+		
+		<!-- Home -->
+
+
+		<!-- Work -->
+			<div class="wrapper wrapper-style2">
+			
+				<article>
+					<header>
+						<table class="headertable">
+						<tr>
+						<td>
+						<span class="image image-centered"><img src="css/images/logo.png" alt="" /></span>
+						</td>
+						<td>
+						<h2>Global Statistical Analysis of Generic Web</h2>
+						<span id="countanddate"></span>
+						</td>
+						</tr>
+						</table>
+					</header>
+					
+					<div class="5grid-layout">
+						<div class="row">
+							<div class="12u">
+							<a href="index.html" class="button gbutton-big">Session Statistics</a>
+							<a href="meta.php" class="button gbutton-big">Metadata Statistics</a>
+							</div>
+							<div class="4u">
+								<section class="box box-style1">
+									<h3>Per Page Statistical Table</h3>
+										<table class="datatable">
+												<thead>
+													<tr class="odd">
+														<th scope="col" abbr="Business">Element Type</th>
+														<th scope="col" abbr="Business dsd">Total Count</th>
+														<th scope="col" abbr="Business dsd">Page Count</th>
+														<th scope="col" abbr="Business Plus">Count (per page)</th>
+													</tr>	
+													</thead>
+													<tbody id="tbbody">	
+													</tbody>
+											</table>
+								</section>
+							</div>
+							<div class="8u">
+								<section class="box box-style1">
+									<h3>Global Statistics</h3>
+									<div id="chart_div" style="height:400px;width:100%"></div>
+								</section>
+							</div>
+										
+						</div>
+
+					</div>
+				</article>
+				<script type="text/javascript">
+
+		
+
+</script>
+			</div>
+
+		<!-- Contact -->
+			<div class="wrapper wrapper-style4">
+				<article id="contact">
+					<footer>
+						<p id="copyright">
+						&#169; Anghiari.com/Team-OryX - All Rights Reserved 2013 
+						</p>
+					</footer>
+				</article>
+			</div>
+
+<script src="js/scripts.js"></script>
+	</body>
+</html>

@@ -1,0 +1,14 @@
+<data pagecount="310">
+	<stat component="Image" pagecount="310" webtag="img">4645</stat>
+	<stat component="Video" pagecount="310" webtag="video">0</stat>
+	<stat component="Iframe" pagecount="310" webtag="iframe">67</stat>
+	<stat component="Form" pagecount="310" webtag="form">534</stat>
+	<stat component="Table" pagecount="310" webtag="table">339</stat>
+	<stat component="Object" pagecount="310" webtag="object">18</stat>
+	<stat component="Fieldset" pagecount="307" webtag="fieldset">24</stat>
+	<stat component="Aside" pagecount="121" webtag="aside">8</stat>
+	<stat component="Button" pagecount="121" webtag="button">62</stat>
+	<stat component="Select" pagecount="121" webtag="select">5</stat>
+	<stat component="Embed" pagecount="121" webtag="embed">4</stat> 
+	<stat component="Footer" pagecount="121" webtag="footer">64</stat> 
+</data>
