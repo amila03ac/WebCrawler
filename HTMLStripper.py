@@ -9,6 +9,7 @@ class HTMLStripper(HTMLParser):
     def get_data(self):
         return ''.join(self.fed)
 #strip html tags
+#iihda
 def strip_tags(html):
     s = HTMLStripper()
     s.feed(html)
